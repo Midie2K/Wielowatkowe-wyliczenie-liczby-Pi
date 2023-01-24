@@ -1,47 +1,25 @@
 package pl.edu.wszib.pi;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class App {
     public static long shots = 0, hits = 0;
+
     public static void main(String[] args) {
         double pi;
-        Thread t0 = new Thread(new Watki());
-        Thread t1 = new Thread(new Watki());
-        Thread t2 = new Thread(new Watki());
-        Thread t3 = new Thread(new Watki());
-        Thread t4 = new Thread(new Watki());
-        Thread t5 = new Thread(new Watki());
-        Thread t6 = new Thread(new Watki());
-        Thread t7 = new Thread(new Watki());
-        Thread t8 = new Thread(new Watki());
-        Thread t9 = new Thread(new Watki());
+        int numberOfThreads = 10;
 
-        t0.start();
-        t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
-        t5.start();
-        t6.start();
-        t7.start();
-        t8.start();
-        t9.start();
+        ExecutorService Pi = Executors.newFixedThreadPool(numberOfThreads);
 
-        try{
-            t0.join();
-            t1.join();
-            t3.join();
-            t4.join();
-            t5.join();
-            t6.join();
-            t7.join();
-            t8.join();
-            t9.join();
-        } catch (InterruptedException e){}
+        for(int i = 0; i<numberOfThreads; i++){
+            Pi.execute(new Watki());
+        }
+        Pi.shutdown();
 
+        while(!Pi.isTerminated()){} // "Czekanie" na watki skoncza swoje zadania
 
-
-        pi =(double) (4 * hits)/shots;
-
+        pi = (double) (4 * hits)/shots;
         System.out.println(
                 new StringBuilder()
                         .append("Ilosc strzalow : ")
@@ -50,8 +28,7 @@ public class App {
                         .append(hits)
                         .append("\nWyliczone Pi : ")
                         .append(pi)
-                );
+        );
     }
-
-
 }
+

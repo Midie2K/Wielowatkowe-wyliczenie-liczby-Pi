@@ -10,15 +10,15 @@ public class Watki implements Runnable {
     public void run() {
         int shots, hits = 0;
         shots = 100000;
-        double x[] = new double[ shots];
-        double y[] = new double[shots];
+        double x;
+        double y;
         double r=0;
 
         for(int i = 0; i<shots; i++){
-           x[i] = 2 * (new Random().nextDouble()) - 1;
-           y[i] = 2 * (new Random().nextDouble()) - 1;
+           x = 2 * (new Random().nextDouble()) - 1;
+           y = 2 * (new Random().nextDouble()) - 1;
 
-           r = sqrt(x[i]*x[i] + y[i]*y[i]);
+           r = sqrt(x*x + y*y);
 
            if(r<=1){
                hits++;
